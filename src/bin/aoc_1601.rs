@@ -2,7 +2,11 @@
 
 use std::collections::HashSet;
 
+use aoc_lib::TracingAlloc;
 use color_eyre::eyre::{eyre, Result};
+
+#[global_allocator]
+static ALLOC: TracingAlloc = TracingAlloc::new();
 
 #[derive(Debug, Copy, Clone)]
 enum Instruction {
@@ -152,7 +156,13 @@ fn main() -> Result<()> {
     let input = std::fs::read_to_string("inputs/aoc_1601.txt")?;
     let instructions = Instruction::parse(&input)?;
 
-    aoc_lib::run("No Time for a Taxicab", &*instructions, &part1, &part2)
+    aoc_lib::run(
+        &ALLOC,
+        "Day 1: No Time for a Taxicab",
+        &*instructions,
+        &part1,
+        &part2,
+    )
 }
 
 #[cfg(test)]
