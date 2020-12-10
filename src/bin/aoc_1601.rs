@@ -153,7 +153,7 @@ fn part2(instrs: &[Instruction]) -> Result<i16> {
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let input = std::fs::read_to_string("inputs/aoc_1601.txt")?;
+    let input = aoc_lib::input(2016, 1).open()?;
     let instructions = Instruction::parse(&input)?;
 
     aoc_lib::run(
