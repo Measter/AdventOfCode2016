@@ -154,15 +154,18 @@ fn main() -> Result<()> {
     color_eyre::install()?;
 
     let input = aoc_lib::input(2016, 1).open()?;
-    let instructions = Instruction::parse(&input)?;
+    let (instructions, parse_bench) =
+        aoc_lib::bench(&ALLOC, "Parse", &|| Instruction::parse(&input))?;
 
-    aoc_lib::run(
-        &ALLOC,
+    let (p1_res, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| part1(&instructions))?;
+    let (p2_res, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| part2(&instructions))?;
+
+    aoc_lib::display_results(
         "Day 1: No Time for a Taxicab",
-        &*instructions,
-        &part1,
-        &part2,
-    )
+        &[(&"", parse_bench), (&p1_res, p1_bench), (&p2_res, p2_bench)],
+    );
+
+    Ok(())
 }
 
 #[cfg(test)]
