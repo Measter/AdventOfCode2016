@@ -114,7 +114,7 @@ fn part2(instrs: &[Vec<Instruction>]) -> Result<String> {
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let input = std::fs::read_to_string("inputs/aoc_1602.txt")?;
+    let input = aoc_lib::input(2016, 02).open()?;
     let (instructions, parse_bench) =
         aoc_lib::bench(&ALLOC, "Parse", &|| Instruction::parse(&input))?;
 
