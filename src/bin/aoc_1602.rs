@@ -114,7 +114,7 @@ fn part2(instrs: &[Vec<Instruction>]) -> Result<String> {
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let input = aoc_lib::input(2016, 02).open()?;
+    let input = aoc_lib::input(2016, 2).open()?;
     let (instructions, parse_bench) =
         aoc_lib::bench(&ALLOC, "Parse", &|| Instruction::parse(&input))?;
 

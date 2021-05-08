@@ -59,7 +59,7 @@ fn valid_tris(tris: &[[u16; 3]]) -> Result<usize> {
 fn main() -> Result<()> {
     color_eyre::install()?;
 
-    let input = aoc_lib::input(2016, 03).open()?;
+    let input = aoc_lib::input(2016, 3).open()?;
     let (p1_tris, parse_p1_bench) = aoc_lib::bench(&ALLOC, "Parse P1", &|| parse_p1(&input))?;
     let (p2_tris, parse_p2_bench) = aoc_lib::bench(&ALLOC, "Parse P2", &|| parse_p2(&input))?;
 
@@ -95,7 +95,7 @@ mod tests_1603 {
 
     #[test]
     fn parse_p2_test() {
-        let input = aoc_lib::input(2016, 03)
+        let input = aoc_lib::input(2016, 3)
             .example(Example::Parse, 1)
             .open()
             .unwrap();
