@@ -1,10 +1,7 @@
 #![allow(clippy::unnecessary_wraps)]
 
 use aoc_lib::TracingAlloc;
-use color_eyre::{
-    eyre::{eyre, Result},
-    Report,
-};
+use color_eyre::eyre::{eyre, Result};
 use itertools::Itertools;
 
 #[global_allocator]
