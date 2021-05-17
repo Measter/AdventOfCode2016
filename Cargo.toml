@@ -11,3 +11,4 @@ nom = "6.0.0"
 color-eyre = "0.5"
 aoc_lib = { git = "https://github.com/Measter/aoc_lib" }
 itertools = "0.10.0"
+md5 = "0.7.0"
