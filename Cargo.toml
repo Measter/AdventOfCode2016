@@ -12,3 +12,10 @@ color-eyre = "0.5"
 aoc_lib = { git = "https://github.com/Measter/aoc_lib" }
 itertools = "0.10.0"
 md5 = "0.7.0"
+
+[profile.release]
+overflow-checks = true
+
+[profile.test]
+overflow-checks = true
+opt-level = 3
