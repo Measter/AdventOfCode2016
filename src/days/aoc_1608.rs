@@ -1,5 +1,5 @@
 use aoc_lib::{day, Bench, BenchError, BenchResult};
-use color_eyre::{eyre::eyre, Report, Result};
+use color_eyre::{eyre::eyre, Result};
 
 day! {
     day 8: "Two-Factor Authentication"
