@@ -1,8 +1,51 @@
-use aoc_lib::TracingAlloc;
+use aoc_lib::{day, Bench, BenchError, BenchResult};
 use color_eyre::{eyre::eyre, Report, Result};
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 8: "Two-Factor Authentication"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let instrs: Vec<_> = input
+        .lines()
+        .map(str::trim)
+        .map(Instruction::parse)
+        .collect::<Result<_, _>>()
+        .map_err(|e| BenchError::UserError(e.into()))?;
+
+    b.bench(|| {
+        let mut display = Display::new(50, 6);
+        for &instr in &instrs {
+            display
+                .execute(instr)
+                .map_err(|e| BenchError::UserError(e.into()))?;
+        }
+
+        Ok::<_, BenchError>(display.num_lit())
+    })
+}
+
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let instrs: Vec<_> = input
+        .lines()
+        .map(str::trim)
+        .map(Instruction::parse)
+        .collect::<Result<_, _>>()
+        .map_err(|e| BenchError::UserError(e.into()))?;
+
+    let mut display = Display::new(50, 6);
+    for &instr in &instrs {
+        display
+            .execute(instr)
+            .map_err(|e| BenchError::UserError(e.into()))?;
+    }
+
+    display.print_display();
+
+    b.bench(|| Ok::<_, u32>("CHECK DBGOUT"))
+}
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
 enum Instruction {
@@ -123,47 +166,47 @@ impl Display {
         for row in self.pixels.chunks_exact(self.width) {
             line_buf.clear();
             line_buf.extend(row.iter().map(|&p| if p { '#' } else { ' ' }));
-            println!("{}", line_buf);
+            eprintln!("{}", line_buf);
         }
     }
 }
 
-fn main() -> Result<()> {
-    color_eyre::install()?;
+// fn main() -> Result<()> {
+//     color_eyre::install()?;
 
-    let input = aoc_lib::input(2016, 8).open()?;
-    let (instrs, parse_bench) = aoc_lib::bench(&ALLOC, "Parse", &|| {
-        input
-            .lines()
-            .map(str::trim)
-            .map(Instruction::parse)
-            .collect::<Result<Vec<_>>>()
-    })?;
+//     let input = aoc_lib::input(2016, 8).open()?;
+//     let (instrs, parse_bench) = aoc_lib::bench(&ALLOC, "Parse", &|| {
+//         input
+//             .lines()
+//             .map(str::trim)
+//             .map(Instruction::parse)
+//             .collect::<Result<Vec<_>>>()
+//     })?;
 
-    let ((display, p1_res), p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| {
-        let mut display = Display::new(50, 6);
-        for &instr in &instrs {
-            display.execute(instr)?;
-        }
+//     let ((display, p1_res), p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| {
+//         let mut display = Display::new(50, 6);
+//         for &instr in &instrs {
+//             display.execute(instr)?;
+//         }
 
-        let lit = display.num_lit();
-        Ok::<_, Report>((display, lit))
-    })?;
+//         let lit = display.num_lit();
+//         Ok::<_, Report>((display, lit))
+//     })?;
 
-    let (_, p2_res) = aoc_lib::bench(&ALLOC, "Part 2", &|| Ok::<(), ()>(()))?;
-    display.print_display();
+//     let (_, p2_res) = aoc_lib::bench(&ALLOC, "Part 2", &|| Ok::<(), ()>(()))?;
+//     display.print_display();
 
-    aoc_lib::display_results(
-        "Day 8: Two-Factor Authentication",
-        &[
-            (&"", parse_bench),
-            (&p1_res, p1_bench),
-            (&"Scroll Up ^^", p2_res),
-        ],
-    );
+//     aoc_lib::display_results(
+//         "Day 8: Two-Factor Authentication",
+//         &[
+//             (&"", parse_bench),
+//             (&p1_res, p1_bench),
+//             (&"Scroll Up ^^", p2_res),
+//         ],
+//     );
 
-    Ok(())
-}
+//     Ok(())
+// }
 
 #[cfg(test)]
 mod tests_1608 {

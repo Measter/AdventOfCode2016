@@ -1,8 +1,44 @@
-use aoc_lib::TracingAlloc;
+use aoc_lib::{day, Bench, BenchError, BenchResult};
 use color_eyre::eyre::{eyre, Result};
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 4: "Security Through Obscurity"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let rooms: Vec<_> = input
+        .lines()
+        .map(str::trim)
+        .map(Room::parse)
+        .collect::<Result<_, _>>()
+        .map_err(|e| BenchError::UserError(e.into()))?;
+
+    b.bench(|| Ok::<u32, u32>(rooms.iter().filter(|r| r.is_real()).map(|r| r.id).sum()))
+}
+
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let rooms: Vec<_> = input
+        .lines()
+        .map(str::trim)
+        .map(Room::parse)
+        .collect::<Result<_, _>>()
+        .map_err(|e| BenchError::UserError(e.into()))?;
+
+    b.bench(|| {
+        let mut buf = String::new();
+        for room in &rooms {
+            buf.clear();
+            room.decrypt_name(&mut buf);
+            if buf == "northpole object storage" {
+                return Ok(room.id);
+            }
+        }
+
+        Err(eyre!("Error: room not found"))
+    })
+}
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 struct Room<'a> {
@@ -69,46 +105,6 @@ impl<'a> Room<'a> {
             _ => c,
         }));
     }
-}
-
-fn main() -> Result<()> {
-    color_eyre::install()?;
-
-    let input = aoc_lib::input(2016, 4).open()?;
-    let (rooms, parse_bench) = aoc_lib::bench(&ALLOC, "Parse", &|| {
-        input
-            .lines()
-            .map(str::trim)
-            .map(Room::parse)
-            .collect::<Result<Vec<_>>>()
-    })?;
-
-    let (p1_result, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| {
-        Ok::<u32, ()>(rooms.iter().filter(|r| r.is_real()).map(|r| r.id).sum())
-    })?;
-    let (p2_result, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| {
-        let mut buf = String::new();
-        for room in &rooms {
-            buf.clear();
-            room.decrypt_name(&mut buf);
-            if buf == "northpole object storage" {
-                return Ok(room.id);
-            }
-        }
-
-        Err(eyre!("Error: room not found"))
-    })?;
-
-    aoc_lib::display_results(
-        "Day 4: Security Through Obscurity",
-        &[
-            (&"", parse_bench),
-            (&p1_result, p1_bench),
-            (&p2_result, p2_bench),
-        ],
-    );
-
-    Ok(())
 }
 
 #[cfg(test)]

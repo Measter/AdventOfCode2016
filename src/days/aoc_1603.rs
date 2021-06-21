@@ -1,11 +1,22 @@
-#![allow(clippy::unnecessary_wraps)]
-
-use aoc_lib::TracingAlloc;
+use aoc_lib::{day, Bench, BenchError, BenchResult};
 use color_eyre::eyre::{eyre, Result};
 use itertools::Itertools;
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 3: "Squares With Three Sides"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let tris = parse_p1(input).map_err(|e| BenchError::UserError(e.into()))?;
+    b.bench(|| valid_tris(&tris))
+}
+
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let tris = parse_p2(input).map_err(|e| BenchError::UserError(e.into()))?;
+    b.bench(|| valid_tris(&tris))
+}
 
 fn parse_p1(input: &str) -> Result<Vec<[u16; 3]>> {
     input
@@ -54,29 +65,6 @@ fn valid_tris(tris: &[[u16; 3]]) -> Result<usize> {
         .iter()
         .filter(|[a, b, c]| a + b > *c && a + c > *b && b + c > *a)
         .count())
-}
-
-fn main() -> Result<()> {
-    color_eyre::install()?;
-
-    let input = aoc_lib::input(2016, 3).open()?;
-    let (p1_tris, parse_p1_bench) = aoc_lib::bench(&ALLOC, "Parse P1", &|| parse_p1(&input))?;
-    let (p2_tris, parse_p2_bench) = aoc_lib::bench(&ALLOC, "Parse P2", &|| parse_p2(&input))?;
-
-    let (p1_res, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| valid_tris(&p1_tris))?;
-    let (p2_res, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| valid_tris(&p2_tris))?;
-
-    aoc_lib::display_results(
-        "Day 3: Squares With Three Sides",
-        &[
-            (&"", parse_p1_bench),
-            (&"", parse_p2_bench),
-            (&p1_res, p1_bench),
-            (&p2_res, p2_bench),
-        ],
-    );
-
-    Ok(())
 }
 
 #[cfg(test)]

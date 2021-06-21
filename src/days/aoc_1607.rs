@@ -1,8 +1,29 @@
-use aoc_lib::{misc::ArrWindows, TracingAlloc};
-use color_eyre::{eyre::eyre, Report, Result};
+use aoc_lib::{day, misc::ArrWindows, Bench, BenchError, BenchResult};
+use color_eyre::{eyre::eyre, Result};
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 7: "Internet Protocal Version 7"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let input_lines: Vec<_> = input.lines().collect();
+    b.bench(|| Ok::<_, u32>(input_lines.iter().filter(|l| part1(l)).count()))
+}
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let input_lines: Vec<_> = input.lines().collect();
+    b.bench(|| {
+        let mut count = 0;
+        for address in &input_lines {
+            if part2(address).map_err(|e| BenchError::UserError(e.into()))? {
+                count += 1;
+            }
+        }
+
+        Ok::<usize, BenchError>(count)
+    })
+}
 
 fn part1(address: &str) -> bool {
     let mut is_in_brackets = false;
@@ -62,35 +83,6 @@ fn part2(address: &str) -> Result<bool> {
     }
 
     Ok(false)
-}
-
-fn main() -> Result<()> {
-    color_eyre::install()?;
-
-    let input = aoc_lib::input(2016, 7).open()?;
-    let input_lines: Vec<_> = input.lines().collect();
-
-    let (p1_result, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| {
-        Ok::<usize, ()>(input_lines.iter().filter(|l| part1(l)).count())
-    })?;
-
-    let (p2_result, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| {
-        let mut count = 0;
-        for address in &input_lines {
-            if part2(address)? {
-                count += 1;
-            }
-        }
-
-        Ok::<usize, Report>(count)
-    })?;
-
-    aoc_lib::display_results(
-        "Day 7: Internet Protocol Version 7",
-        &[(&p1_result, p1_bench), (&p2_result, p2_bench)],
-    );
-
-    Ok(())
 }
 
 #[cfg(test)]

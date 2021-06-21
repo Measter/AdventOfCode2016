@@ -1,10 +1,22 @@
 use std::{array::IntoIter, cmp::Ordering};
 
-use aoc_lib::TracingAlloc;
-use color_eyre::Result;
+use aoc_lib::{day, Bench, BenchResult};
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 6: "Signals and Noise"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let input_lines: Vec<_> = input.lines().collect();
+    b.bench(|| Ok::<_, u32>(part(&input_lines, |f| f)))
+}
+
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let input_lines: Vec<_> = input.lines().collect();
+    b.bench(|| Ok::<_, u32>(part(&input_lines, Ordering::reverse)))
+}
 
 fn part(input: &[&str], f: fn(Ordering) -> Ordering) -> String {
     let mut output = vec!['!'; input[0].len()];
@@ -28,26 +40,6 @@ fn part(input: &[&str], f: fn(Ordering) -> Ordering) -> String {
     }
 
     output.into_iter().collect()
-}
-
-fn main() -> Result<()> {
-    color_eyre::install()?;
-
-    let input = aoc_lib::input(2016, 6).open()?;
-    let input_lines: Vec<_> = input.lines().collect();
-    let (p1_result, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| {
-        Ok::<String, ()>(part(&input_lines, |f| f))
-    })?;
-    let (p2_result, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| {
-        Ok::<String, ()>(part(&input_lines, Ordering::reverse))
-    })?;
-
-    aoc_lib::display_results(
-        "Day 6: Signals and Noise",
-        &[(&p1_result, p1_bench), (&p2_result, p2_bench)],
-    );
-
-    Ok(())
 }
 
 #[cfg(test)]

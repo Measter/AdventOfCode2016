@@ -1,12 +1,23 @@
-#![allow(clippy::unnecessary_wraps)]
-
 use std::collections::HashSet;
 
-use aoc_lib::TracingAlloc;
+use aoc_lib::{day, Bench, BenchError, BenchResult};
 use color_eyre::eyre::{eyre, Result};
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 1: "No Time for a Taxicab"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let instructions = Instruction::parse(&input).map_err(|e| BenchError::UserError(e.into()))?;
+    b.bench(|| part1(&instructions))
+}
+
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let instructions = Instruction::parse(&input).map_err(|e| BenchError::UserError(e.into()))?;
+    b.bench(|| part2(&instructions))
+}
 
 #[derive(Debug, Copy, Clone)]
 enum Instruction {
@@ -148,24 +159,6 @@ fn part2(instrs: &[Instruction]) -> Result<i16> {
         }
     }
     Err(eyre!("No coordinates visited twice"))
-}
-
-fn main() -> Result<()> {
-    color_eyre::install()?;
-
-    let input = aoc_lib::input(2016, 1).open()?;
-    let (instructions, parse_bench) =
-        aoc_lib::bench(&ALLOC, "Parse", &|| Instruction::parse(&input))?;
-
-    let (p1_res, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| part1(&instructions))?;
-    let (p2_res, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| part2(&instructions))?;
-
-    aoc_lib::display_results(
-        "Day 1: No Time for a Taxicab",
-        &[(&"", parse_bench), (&p1_res, p1_bench), (&p2_res, p2_bench)],
-    );
-
-    Ok(())
 }
 
 #[cfg(test)]

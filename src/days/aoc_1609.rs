@@ -1,12 +1,24 @@
-use aoc_lib::{parsers::unsigned_number, TracingAlloc};
-use color_eyre::Result;
+use aoc_lib::{day, parsers::unsigned_number, Bench, BenchResult};
 use nom::{
     bytes::complete::tag,
     sequence::{preceded, separated_pair, terminated},
 };
 
-#[global_allocator]
-static ALLOC: TracingAlloc = TracingAlloc::new();
+day! {
+    day 9: "Explosives in Cyberspace"
+    1: run_part1
+    2: run_part2
+}
+
+fn run_part1(input: &str, b: Bench) -> BenchResult {
+    let input = input.trim();
+    b.bench(|| Ok::<_, u32>(part1(&input)))
+}
+
+fn run_part2(input: &str, b: Bench) -> BenchResult {
+    let input = input.trim();
+    b.bench(|| Ok::<_, u32>(part2(&input)))
+}
 
 // Implements the algorithm in this post: https://www.reddit.com/r/adventofcode/comments/5hbygy/2016_day_9_solutions/dazentu/
 fn part1(input: &str) -> usize {
@@ -66,27 +78,6 @@ fn part2(input: &str) -> usize {
     }
 
     final_length
-}
-
-fn main() -> Result<()> {
-    color_eyre::install()?;
-
-    let input = aoc_lib::input(2016, 9).open()?;
-
-    let (p1_res, p1_bench) = aoc_lib::bench(&ALLOC, "Part 1", &|| {
-        let result = part1(&input.trim());
-        Ok::<_, ()>(result)
-    })?;
-    let (p2_res, p2_bench) = aoc_lib::bench(&ALLOC, "Part 2", &|| {
-        let result = part2(&input.trim());
-        Ok::<_, ()>(result)
-    })?;
-
-    aoc_lib::display_results(
-        "Day 9: Explosives in Cyberspace",
-        &[(&p1_res, p1_bench), (&p2_res, p2_bench)],
-    );
-    Ok(())
 }
 
 #[cfg(test)]
