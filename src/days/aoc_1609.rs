@@ -1,4 +1,4 @@
-use aoc_lib::{day, parsers::unsigned_number, Bench, BenchResult};
+use aoc_lib::{day, parsers::unsigned_number, Bench, BenchResult, NoError};
 use nom::{
     bytes::complete::tag,
     sequence::{preceded, separated_pair, terminated},
@@ -12,12 +12,12 @@ day! {
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input = input.trim();
-    b.bench(|| Ok::<_, u32>(part1(&input)))
+    b.bench(|| Ok::<_, NoError>(part1(&input)).map(Into::into))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
     let input = input.trim();
-    b.bench(|| Ok::<_, u32>(part2(&input)))
+    b.bench(|| Ok::<_, NoError>(part2(&input)).map(Into::into))
 }
 
 // Implements the algorithm in this post: https://www.reddit.com/r/adventofcode/comments/5hbygy/2016_day_9_solutions/dazentu/

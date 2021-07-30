@@ -1,4 +1,4 @@
-use aoc_lib::{day, Bench, BenchError, BenchResult};
+use aoc_lib::{day, AnswerType, Bench, BenchError, BenchResult};
 use color_eyre::{eyre::eyre, Result};
 
 day! {
@@ -23,7 +23,7 @@ fn run_part1(input: &str, b: Bench) -> BenchResult {
                 .map_err(|e| BenchError::UserError(e.into()))?;
         }
 
-        Ok::<_, BenchError>(display.num_lit())
+        Ok::<_, BenchError>(display.num_lit()).map(Into::into)
     })
 }
 
@@ -35,16 +35,16 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
         .collect::<Result<_, _>>()
         .map_err(|e| BenchError::UserError(e.into()))?;
 
-    let mut display = Display::new(50, 6);
-    for &instr in &instrs {
-        display
-            .execute(instr)
-            .map_err(|e| BenchError::UserError(e.into()))?;
-    }
+    b.bench(|| {
+        let mut display = Display::new(50, 6);
+        for &instr in &instrs {
+            display
+                .execute(instr)
+                .map_err(|e| BenchError::UserError(e.into()))?;
+        }
 
-    display.print_display();
-
-    b.bench(|| Ok::<_, u32>("CHECK DBGOUT"))
+        Ok::<_, BenchError>(AnswerType::Alt(display.render_display()))
+    })
 }
 
 #[derive(Debug, Clone, Copy, Eq, PartialEq)]
@@ -160,14 +160,15 @@ impl Display {
         self.pixels.iter().filter(|p| **p).count()
     }
 
-    fn print_display(&self) {
-        let mut line_buf = String::with_capacity(self.width);
+    fn render_display(&self) -> String {
+        let mut buf = String::with_capacity(self.width);
 
         for row in self.pixels.chunks_exact(self.width) {
-            line_buf.clear();
-            line_buf.extend(row.iter().map(|&p| if p { '#' } else { ' ' }));
-            eprintln!("{}", line_buf);
+            buf.extend(row.iter().map(|&p| if p { '#' } else { ' ' }));
+            buf.push('\n');
         }
+
+        buf
     }
 }
 

@@ -1,6 +1,6 @@
 use std::{array::IntoIter, cmp::Ordering};
 
-use aoc_lib::{day, Bench, BenchResult};
+use aoc_lib::{day, Bench, BenchResult, NoError};
 
 day! {
     day 6: "Signals and Noise"
@@ -10,12 +10,12 @@ day! {
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input_lines: Vec<_> = input.lines().collect();
-    b.bench(|| Ok::<_, u32>(part(&input_lines, |f| f)))
+    b.bench(|| Ok::<_, NoError>(part(&input_lines, |f| f)).map(Into::into))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
     let input_lines: Vec<_> = input.lines().collect();
-    b.bench(|| Ok::<_, u32>(part(&input_lines, Ordering::reverse)))
+    b.bench(|| Ok::<_, NoError>(part(&input_lines, Ordering::reverse)).map(Into::into))
 }
 
 fn part(input: &[&str], f: fn(Ordering) -> Ordering) -> String {

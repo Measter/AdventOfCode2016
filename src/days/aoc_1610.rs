@@ -20,7 +20,7 @@ fn run_part1(input: &str, b: Bench) -> BenchResult {
 
     b.bench(|| {
         let network = Network::with_instructions(instrs.clone());
-        part1(network)
+        part1(network).map(Into::into)
     })
 }
 
@@ -34,7 +34,7 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
 
     b.bench(|| {
         let network = Network::with_instructions(instrs.clone());
-        part2(network)
+        part2(network).map(Into::into)
     })
 }
 

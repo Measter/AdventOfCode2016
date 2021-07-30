@@ -10,12 +10,12 @@ day! {
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let tris = parse_p1(input).map_err(|e| BenchError::UserError(e.into()))?;
-    b.bench(|| valid_tris(&tris))
+    b.bench(|| valid_tris(&tris).map(Into::into))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
     let tris = parse_p2(input).map_err(|e| BenchError::UserError(e.into()))?;
-    b.bench(|| valid_tris(&tris))
+    b.bench(|| valid_tris(&tris).map(Into::into))
 }
 
 fn parse_p1(input: &str) -> Result<Vec<[u16; 3]>> {

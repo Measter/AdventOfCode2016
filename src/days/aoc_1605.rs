@@ -1,4 +1,4 @@
-use aoc_lib::{day, Bench, BenchResult};
+use aoc_lib::{day, Bench, BenchResult, NoError};
 
 use std::fmt::Write;
 
@@ -9,11 +9,11 @@ day! {
 }
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
-    b.bench(|| Ok::<_, u32>(part1(&input)))
+    b.bench(|| Ok::<_, NoError>(part1(&input)).map(Into::into))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
-    b.bench(|| Ok::<_, u32>(part2(&input)))
+    b.bench(|| Ok::<_, NoError>(part2(&input)).map(Into::into))
 }
 
 fn part1(input: &str) -> String {

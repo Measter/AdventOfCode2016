@@ -1,4 +1,4 @@
-use aoc_lib::{day, Bench, BenchError, BenchResult};
+use aoc_lib::{day, Bench, BenchError, BenchResult, NoError};
 use color_eyre::eyre::{eyre, Result};
 
 day! {
@@ -15,7 +15,9 @@ fn run_part1(input: &str, b: Bench) -> BenchResult {
         .collect::<Result<_, _>>()
         .map_err(|e| BenchError::UserError(e.into()))?;
 
-    b.bench(|| Ok::<u32, u32>(rooms.iter().filter(|r| r.is_real()).map(|r| r.id).sum()))
+    b.bench(|| {
+        Ok::<u32, NoError>(rooms.iter().filter(|r| r.is_real()).map(|r| r.id).sum()).map(Into::into)
+    })
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
@@ -32,7 +34,7 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
             buf.clear();
             room.decrypt_name(&mut buf);
             if buf == "northpole object storage" {
-                return Ok(room.id);
+                return Ok(room.id.into());
             }
         }
 
