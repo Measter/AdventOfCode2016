@@ -32,7 +32,7 @@ fn part(input: &[&str], f: fn(Ordering) -> Ordering) -> String {
         let most_common = IntoIter::new(freq_array)
             .enumerate()
             .filter(|(_, a)| *a > 0)
-            .max_by(|(_, a), (_, b)| f(a.cmp(&b)))
+            .max_by(|(_, a), (_, b)| f(a.cmp(b)))
             .map(|(i, _)| i)
             .unwrap();
 

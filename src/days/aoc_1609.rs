@@ -12,12 +12,12 @@ day! {
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input = input.trim();
-    b.bench(|| Ok::<_, NoError>(part1(&input)).map(Into::into))
+    b.bench(|| Ok::<_, NoError>(part1(input)).map(Into::into))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
     let input = input.trim();
-    b.bench(|| Ok::<_, NoError>(part2(&input)).map(Into::into))
+    b.bench(|| Ok::<_, NoError>(part2(input)).map(Into::into))
 }
 
 // Implements the algorithm in this post: https://www.reddit.com/r/adventofcode/comments/5hbygy/2016_day_9_solutions/dazentu/

@@ -239,12 +239,11 @@ mod tests_1608 {
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();
-        let instructions: Vec<_> = input
+        let instructions = input
             .lines()
             .map(str::trim)
             .map(Instruction::parse)
-            .map(Result::unwrap)
-            .collect();
+            .map(Result::unwrap);
 
         #[rustfmt::skip]
         let actual = [
@@ -272,7 +271,7 @@ mod tests_1608 {
 
         let mut display = Display::new(7, 3);
 
-        for (instr, actual) in instructions.into_iter().zip(IntoIter::new(actual)) {
+        for (instr, actual) in instructions.zip(IntoIter::new(actual)) {
             display.execute(instr).unwrap();
             assert_eq!(display.pixels, actual.as_ref(), "{:?}", instr);
         }
