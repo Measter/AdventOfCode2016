@@ -15,9 +15,7 @@ fn run_part1(input: &str, b: Bench) -> BenchResult {
         .collect::<Result<_, _>>()
         .map_err(|e| BenchError::UserError(e.into()))?;
 
-    b.bench(|| {
-        Ok::<u32, NoError>(rooms.iter().filter(|r| r.is_real()).map(|r| r.id).sum()).map(Into::into)
-    })
+    b.bench(|| Ok::<u32, NoError>(rooms.iter().filter(|r| r.is_real()).map(|r| r.id).sum()))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
@@ -34,7 +32,7 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
             buf.clear();
             room.decrypt_name(&mut buf);
             if buf == "northpole object storage" {
-                return Ok(room.id.into());
+                return Ok(room.id);
             }
         }
 

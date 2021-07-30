@@ -1,4 +1,4 @@
-use aoc_lib::{day, AnswerType, Bench, BenchError, BenchResult};
+use aoc_lib::{day, Bench, BenchError, BenchResult};
 use color_eyre::{eyre::eyre, Result};
 
 day! {
@@ -23,7 +23,7 @@ fn run_part1(input: &str, b: Bench) -> BenchResult {
                 .map_err(|e| BenchError::UserError(e.into()))?;
         }
 
-        Ok::<_, BenchError>(display.num_lit()).map(Into::into)
+        Ok::<_, BenchError>(display.num_lit())
     })
 }
 
@@ -35,7 +35,7 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
         .collect::<Result<_, _>>()
         .map_err(|e| BenchError::UserError(e.into()))?;
 
-    b.bench(|| {
+    b.bench_alt(|| {
         let mut display = Display::new(50, 6);
         for &instr in &instrs {
             display
@@ -43,7 +43,7 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
                 .map_err(|e| BenchError::UserError(e.into()))?;
         }
 
-        Ok::<_, BenchError>(AnswerType::Alt(display.render_display()))
+        Ok::<_, BenchError>(display.render_display())
     })
 }
 

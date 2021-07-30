@@ -9,12 +9,12 @@ day! {
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let instructions = Instruction::parse(input).map_err(|e| BenchError::UserError(e.into()))?;
-    b.bench(|| part1(&instructions).map(Into::into))
+    b.bench(|| part1(&instructions))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
     let instructions = Instruction::parse(input).map_err(|e| BenchError::UserError(e.into()))?;
-    b.bench(|| part2(&instructions).map(Into::into))
+    b.bench(|| part2(&instructions))
 }
 
 #[derive(Debug)]

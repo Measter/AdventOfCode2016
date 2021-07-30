@@ -9,7 +9,7 @@ day! {
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input_lines: Vec<_> = input.lines().collect();
-    b.bench(|| Ok::<_, NoError>(input_lines.iter().filter(|l| part1(l)).count()).map(Into::into))
+    b.bench(|| Ok::<_, NoError>(input_lines.iter().filter(|l| part1(l)).count()))
 }
 fn run_part2(input: &str, b: Bench) -> BenchResult {
     let input_lines: Vec<_> = input.lines().collect();
@@ -21,7 +21,7 @@ fn run_part2(input: &str, b: Bench) -> BenchResult {
             }
         }
 
-        Ok::<usize, BenchError>(count).map(Into::into)
+        Ok::<usize, BenchError>(count)
     })
 }
 

@@ -9,11 +9,11 @@ day! {
 }
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
-    b.bench(|| Ok::<_, NoError>(part1(input)).map(Into::into))
+    b.bench(|| Ok::<_, NoError>(part1(input)))
 }
 
 fn run_part2(input: &str, b: Bench) -> BenchResult {
-    b.bench(|| Ok::<_, NoError>(part2(input)).map(Into::into))
+    b.bench(|| Ok::<_, NoError>(part2(input)))
 }
 
 fn part1(input: &str) -> String {
