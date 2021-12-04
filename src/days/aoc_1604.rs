@@ -127,10 +127,7 @@ mod tests_1604 {
 
     #[test]
     fn part1_test() {
-        let input = aoc_lib::input(2016, 4)
-            .example(Example::Parse, 1)
-            .open()
-            .unwrap();
+        let input = aoc_lib::input(4).example(Example::Parse, 1).open().unwrap();
         let rooms: Vec<_> = input
             .lines()
             .map(Room::parse)

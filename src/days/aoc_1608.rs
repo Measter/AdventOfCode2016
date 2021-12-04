@@ -217,7 +217,7 @@ mod tests_1608 {
 
     #[test]
     fn parse() {
-        let input = aoc_lib::input(2016, 8)
+        let input = aoc_lib::input(8)
             .example(aoc_lib::Example::Parse, 1)
             .open()
             .unwrap();
@@ -235,7 +235,7 @@ mod tests_1608 {
 
     #[test]
     fn part1() {
-        let input = aoc_lib::input(2016, 8)
+        let input = aoc_lib::input(8)
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();

@@ -83,10 +83,7 @@ mod tests_1603 {
 
     #[test]
     fn parse_p2_test() {
-        let input = aoc_lib::input(2016, 3)
-            .example(Example::Parse, 1)
-            .open()
-            .unwrap();
+        let input = aoc_lib::input(3).example(Example::Parse, 1).open().unwrap();
         let expected = vec![
             [101, 102, 103],
             [301, 302, 303],

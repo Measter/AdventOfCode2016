@@ -256,7 +256,7 @@ mod tests_1610 {
 
     #[test]
     fn part1_example() {
-        let input = input(2016, 10)
+        let input = input(10)
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();

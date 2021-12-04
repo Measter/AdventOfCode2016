@@ -166,7 +166,7 @@ mod tests_1612 {
 
     #[test]
     fn part1() {
-        let instrs = input(2016, 12)
+        let instrs = input(12)
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();

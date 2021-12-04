@@ -86,7 +86,7 @@ mod tests_1609 {
 
     #[test]
     fn part1_test() {
-        let inputs = aoc_lib::input(2016, 9)
+        let inputs = aoc_lib::input(9)
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();
@@ -101,7 +101,7 @@ mod tests_1609 {
 
     #[test]
     fn part2_test() {
-        let inputs = aoc_lib::input(2016, 9)
+        let inputs = aoc_lib::input(9)
             .example(aoc_lib::Example::Part2, 1)
             .open()
             .unwrap();

@@ -48,7 +48,7 @@ mod tests_1606 {
 
     #[test]
     fn part1_test() {
-        let input = aoc_lib::input(2016, 6)
+        let input = aoc_lib::input(6)
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();
@@ -61,7 +61,7 @@ mod tests_1606 {
 
     #[test]
     fn parto_test() {
-        let input = aoc_lib::input(2016, 6)
+        let input = aoc_lib::input(6)
             .example(aoc_lib::Example::Part1, 1)
             .open()
             .unwrap();
