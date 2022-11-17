@@ -1,12 +1,14 @@
-use aoc_lib::{day, Bench, BenchError, BenchResult};
+use aoc_lib::{Bench, BenchError, BenchResult, Day};
 use color_eyre::eyre::{eyre, Result};
 use itertools::Itertools;
 
-day! {
-    day 3: "Squares With Three Sides"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 3,
+    name: "Squares With Three Sides",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let tris = parse_p1(input).map_err(|e| BenchError::UserError(e.into()))?;

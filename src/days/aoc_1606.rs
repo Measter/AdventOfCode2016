@@ -1,12 +1,14 @@
-use std::{array::IntoIter, cmp::Ordering};
+use std::cmp::Ordering;
 
-use aoc_lib::{day, Bench, BenchResult, NoError};
+use aoc_lib::{Bench, BenchResult, Day, NoError};
 
-day! {
-    day 6: "Signals and Noise"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 6,
+    name: "Signals and Noise",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input_lines: Vec<_> = input.lines().collect();
@@ -29,7 +31,8 @@ fn part(input: &[&str], f: fn(Ordering) -> Ordering) -> String {
             freq_array[idx] += 1;
         }
 
-        let most_common = IntoIter::new(freq_array)
+        let most_common = freq_array
+            .into_iter()
             .enumerate()
             .filter(|(_, a)| *a > 0)
             .max_by(|(_, a), (_, b)| f(a.cmp(b)))

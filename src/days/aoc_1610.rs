@@ -1,14 +1,16 @@
 use std::collections::{HashMap, VecDeque};
 
-use aoc_lib::{day, parsers::unsigned_number, Bench, BenchResult, UserError};
+use aoc_lib::{parsers::unsigned_number, Bench, BenchResult, Day, UserError};
 use color_eyre::{eyre::eyre, Result};
 use nom::{branch::alt, bytes::complete::tag, sequence::tuple};
 
-day! {
-    day 10: "Balance Bots"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 10,
+    name: "Balance Bots",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let instrs: VecDeque<_> = input
@@ -59,7 +61,7 @@ enum Instruction {
 
 impl Instruction {
     fn parse(input: &str) -> Result<Instruction> {
-        match input.split_once(" ") {
+        match input.split_once(' ') {
             Some(("value", input)) => {
                 let (_, (value, _, bot_id)) = tuple((
                     unsigned_number::<usize>,

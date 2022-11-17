@@ -1,11 +1,13 @@
-use aoc_lib::{day, misc::ArrWindows, Bench, BenchError, BenchResult, NoError};
+use aoc_lib::{misc::ArrWindows, Bench, BenchError, BenchResult, Day, NoError};
 use color_eyre::{eyre::eyre, Result};
 
-day! {
-    day 7: "Internet Protocal Version 7"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 7,
+    name: "Internet Protocal Version 7",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input_lines: Vec<_> = input.lines().collect();

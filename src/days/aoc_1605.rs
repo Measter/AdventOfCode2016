@@ -1,12 +1,14 @@
-use aoc_lib::{day, Bench, BenchResult, NoError};
+use aoc_lib::{Bench, BenchResult, Day, NoError};
 
 use std::fmt::Write;
 
-day! {
-    day 5: "How About a Nice Game of Chass?"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 5,
+    name: "How About a Nice Game of Chass?",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     b.bench(|| Ok::<_, NoError>(part1(input)))

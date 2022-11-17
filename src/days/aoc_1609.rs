@@ -1,14 +1,16 @@
-use aoc_lib::{day, parsers::unsigned_number, Bench, BenchResult, NoError};
+use aoc_lib::{parsers::unsigned_number, Bench, BenchResult, Day, NoError};
 use nom::{
     bytes::complete::tag,
     sequence::{preceded, separated_pair, terminated},
 };
 
-day! {
-    day 9: "Explosives in Cyberspace"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 9,
+    name: "Explosives in Cyberspace",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let input = input.trim();

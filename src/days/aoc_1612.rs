@@ -1,12 +1,14 @@
-use aoc_lib::{day, Bench, BenchResult, NoError, UserError};
+use aoc_lib::{Bench, BenchResult, Day, NoError, UserError};
 
 use color_eyre::eyre::{eyre, Result};
 
-day! {
-    day 12: "Leonardo's Monorail"
-    1: run_part1
-    2: run_part2
-}
+pub const DAY: Day = Day {
+    day: 12,
+    name: "Leonardo's Monorail",
+    part_1: run_part1,
+    part_2: Some(run_part2),
+    other: &[],
+};
 
 fn run_part1(input: &str, b: Bench) -> BenchResult {
     let instrs: Vec<_> = input
