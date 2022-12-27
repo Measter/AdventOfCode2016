@@ -73,6 +73,7 @@ mod tests_1605 {
     // Commented out tests because they take bloody ages!
 
     // #[test]
+    #[allow(unused)]
     fn part1_test() {
         let door_id = "abc";
         let expected = "18f47a30";
@@ -82,6 +83,7 @@ mod tests_1605 {
     }
 
     // #[test]
+    #[allow(unused)]
     fn part2_test() {
         let door_id = "abc";
         let expected = "05ace8e3";
