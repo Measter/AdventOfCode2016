@@ -12,6 +12,7 @@ mod aoc_1609;
 mod aoc_1610;
 mod aoc_1612;
 mod aoc_1613;
+mod aoc_1615;
 
 pub static DAYS: &[Day] = &[
     aoc_1601::DAY,
@@ -26,4 +27,5 @@ pub static DAYS: &[Day] = &[
     aoc_1610::DAY,
     aoc_1612::DAY,
     aoc_1613::DAY,
+    aoc_1615::DAY,
 ];
